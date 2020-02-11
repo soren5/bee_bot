@@ -24,10 +24,11 @@ class Bee:
             "channel": self.channel,
             "username": self.username,
             "blocks": [
+                self.DIVIDER_BLOCK,
                 *self._get_introduction_block(),
                 *self._get_timestamp_block(),
-                self.DIVIDER_BLOCK,
                 *self._get_report_block(),
+                self.DIVIDER_BLOCK,
             ],
         }
 
@@ -76,11 +77,7 @@ def send_report():
     assert response["ok"]
 
 if __name__ == "__main__": 
-    #schedule.every().day.at("08:00").do(send_report)
-    """
-    schedule.every(1).minutes.do(send_report)
+    schedule.every().day.at("08:00").do(send_report)
     while True:
         schedule.run_pending()
         time.sleep(1)
-    """
-    send_report()
