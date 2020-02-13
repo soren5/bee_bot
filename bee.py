@@ -7,6 +7,8 @@ import time
 
 NAME = "Pink Bee"
 CHANNEL = "#misc"
+FILE_PATH = ""
+
 class Bee:
     """Constructs the onboarding message and stores the state of which tasks were completed."""
     DIVIDER_BLOCK = {"type": "divider"}
@@ -57,12 +59,12 @@ def send_report():
     timestamp = ""
     report = ""
     try:
-        with open("report.json", "r") as fp:
+        with open(FILE_PATH, "r") as fp:
             report_dict = json.load(fp)
             timestamp= report_dict[0]
             report = report_dict[1]
     except:
-        print("Report.json does not exist, sending test report")
+        print(FILE_PATH + " does not exist, sending test report")
         timestamp = 'This is a test timestamp'
         report = 'This is a test report'
     bee = Bee(report, timestamp)
@@ -81,6 +83,7 @@ def send_report():
 
 if __name__ == "__main__": 
     #send_test_report()
+    FILE_PATH = sys.argv[1]
     send_report()
     schedule.every().hour.do(send_report)
     while True:
