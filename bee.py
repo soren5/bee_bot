@@ -56,12 +56,15 @@ def send_report():
     client = WebClient(token=secret.bot_token)
     timestamp = ""
     report = ""
-    with open("report.json", "r") as fp:
-        report_dict = json.load(fp)
-        timestamp= report_dict[0]
-        report = report_dict[1]
-    print(timestamp)
-    print(report)
+    try:
+        with open("report.json", "r") as fp:
+            report_dict = json.load(fp)
+            timestamp= report_dict[0]
+            report = report_dict[1]
+    except:
+        print("Report.json does not exist, sending test report")
+        timestamp = 'This is a test timestamp'
+        report = 'This is a test report'
     bee = Bee(report, timestamp)
 
     # Get the onboarding message payload
@@ -77,7 +80,9 @@ def send_report():
     assert response["ok"]
 
 if __name__ == "__main__": 
-    schedule.every().day.at("08:00").do(send_report)
+    #send_test_report()
+    send_report()
+    schedule.every().hour.do(send_report)
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(60)
