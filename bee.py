@@ -36,7 +36,7 @@ class Bee:
 
     def _get_introduction_block(self):
         text = (
-            "Hello, I am " + self.username)
+            "Hello, I am " + self.username + " and I am sending " + FILE_PATH)
         return self._get_task_block(text)
 
     def _get_timestamp_block(self):
