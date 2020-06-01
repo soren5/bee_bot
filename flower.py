@@ -14,4 +14,12 @@ def create_report(filename, dirname, report, extra):
     with open(dirname + filename, 'w') as fp:
         json.dump([timestamp, message, extra], fp)
 
+def get_time_left_message(current_iteration, max_iteration, start_time):
+    progress_percentage = float(current_iteration + 1) / float(max_iteration) 
+    elapsed_time = time.time() - start_time
+    time_estimate = elapsed_time / progress_percentage
+    hours_left = int(time_estimate / 60 / 60)
+    minutes_left = int(time_estimate % 60)
+    seconds_left = int(time_estimate / 60 % 60)
+    return str(hours_left) + ':' + str(minutes_left) + ':' + str(seconds_left)
 #create_report("test.json", 'reports/', ["This is an example report"], ["this is additional hidden information"])
